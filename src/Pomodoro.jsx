@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useIsMobile } from "./useIsMobile";
 
 const C = {
   bg: "#0A0B1A", surface: "#0F1128", card: "#141630", border: "#1E2245",
@@ -75,6 +76,7 @@ function SectionLabel({ children }) {
 }
 
 export default function Pomodoro() {
+  const isMobile = useIsMobile();
   const [modeIdx, setModeIdx] = useState(0);
   const [durations, setDurations] = useState({ focus: 25, shortBreak: 5, longBreak: 15 });
   const [secondsLeft, setSecondsLeft] = useState(25 * 60);
@@ -178,16 +180,16 @@ export default function Pomodoro() {
   return (
     <>
       <style>{css}</style>
-      <div style={{ maxWidth: 860, margin: "0 auto", padding: "32px 24px 80px" }}>
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: isMobile ? "16px 14px 100px" : "32px 24px 80px" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: 28, animation: "fadeUp .4s ease" }}>
+        <div style={{ marginBottom: isMobile ? 16 : 28, animation: "fadeUp .4s ease" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: C.accentSoft, textTransform: "uppercase", marginBottom: 6 }}>Stay in the zone</p>
-          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 28, fontWeight: 700, marginBottom: 4 }}>Pomodoro Timer ⏱️</h1>
-          <p style={{ fontSize: 14, color: C.textSecondary }}>Deep work in focused sprints. Rest. Repeat.</p>
+          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: isMobile ? 22 : 28, fontWeight: 700, marginBottom: 4 }}>Pomodoro Timer ⏱️</h1>
+          <p style={{ fontSize: 13, color: C.textSecondary }}>Deep work in focused sprints. Rest. Repeat.</p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.2fr 1fr", gap: isMobile ? 14 : 20 }}>
 
           {/* Left — Timer */}
           <div>

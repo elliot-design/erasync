@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useIsMobile } from "./useIsMobile";
 
 const C = {
   bg: "#0A0B1A", surface: "#0F1128", card: "#141630", border: "#1E2245",
@@ -152,6 +153,7 @@ function AddHabitModal({ onAdd, onClose }) {
 }
 
 export default function HabitTracker() {
+  const isMobile = useIsMobile();
   const [habits, setHabits] = useState(DEFAULT_HABITS);
   const [showModal, setShowModal] = useState(false);
 
@@ -189,24 +191,17 @@ export default function HabitTracker() {
       <style>{css}</style>
       <div style={{ minHeight: "100vh", background: C.bg, paddingBottom: 48 }}>
 
-        {/* Nav */}
-        <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 32px", borderBottom: `1px solid ${C.border}`, background: C.surface + "CC", backdropFilter: "blur(16px)", position: "sticky", top: 0, zIndex: 100 }}>
-          <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 22, fontWeight: 700, background: `linear-gradient(135deg,${C.accentSoft},${C.teal})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>EraSync</span>
-          <span style={{ fontSize: 14, fontWeight: 600, color: C.textSecondary }}>Habit Tracker</span>
-          <div style={{ width: 36, height: 36, borderRadius: "50%", background: `linear-gradient(135deg,${C.accent},${C.teal})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#fff" }}>Y</div>
-        </nav>
-
-        <div style={{ maxWidth: 780, margin: "0 auto", padding: "32px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto", padding: isMobile ? "16px 14px 100px" : "32px 24px" }}>
 
           {/* Header */}
-          <div style={{ marginBottom: 28, animation: "fadeUp .4s ease" }}>
+          <div style={{ marginBottom: isMobile ? 16 : 28, animation: "fadeUp .4s ease" }}>
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: C.accentSoft, textTransform: "uppercase", marginBottom: 6 }}>This Week</p>
-            <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 28, fontWeight: 700, marginBottom: 4 }}>Your Habits 🎯</h1>
-            <p style={{ fontSize: 14, color: C.textSecondary }}>Small daily actions compound into massive results.</p>
+            <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: isMobile ? 22 : 28, fontWeight: 700, marginBottom: 4 }}>Your Habits 🎯</h1>
+            <p style={{ fontSize: 13, color: C.textSecondary }}>Small daily actions compound into massive results.</p>
           </div>
 
           {/* Summary Cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: isMobile ? 10 : 16, marginBottom: isMobile ? 14 : 24 }}>
             {[
               { label: "Today's Progress", value: `${completedToday}/${totalHabits}`, sub: "habits completed", color: C.accentSoft },
               { label: "Completion Rate", value: overallPct + "%", sub: "today", color: C.teal },
